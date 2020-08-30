@@ -56,3 +56,44 @@ I was expecting:
   - the rest of repl_value_9's definition. Maybe you forgot some code? Or maybe
     the body of `repl_value_9` needs to be indented?
 ```
+
+```
+> if True then 1 else 2
+1 : number
+> if True then + else -
+-- PARSE ERROR ------------------------------------------------------------- elm
+
+Something went wrong while parsing an `if` expression in repl_value_2's
+definition.
+
+4|   if True then + else -
+                  ^
+I was expecting to see an expression, like x or 42.
+> (+)          
+<function> : number -> number -> number
+> if True then (+) else (-) 5 3
+-- TYPE MISMATCH ----------------------------------------------------------- elm
+
+The 2nd branch of this `if` does not match all the previous branches:
+
+4|   if True then (+) else (-) 5 3
+                           ^^^^^^^
+The 2nd branch is:
+
+    number
+
+But all the previous branches result in:
+
+    number -> number -> number
+
+Hint: All branches in an `if` must produce the same type of values. This way, no
+matter which branch we take, the result is always a consistent shape. Read
+<https://elm-lang.org/0.19.0/union-types> to learn how to “mix” types.
+
+Hint: Only Int and Float values work as numbers.
+> (if True then (+) else (-)) 5 3
+8 : number
+> (if True then (+) else (-)) \
+|   5 3
+8 : number
+```
