@@ -162,3 +162,51 @@ RangeError: Maximum call stack size exceeded>
 > fib_cps 2 (\n -> n)
 RangeError: Maximum call stack size exceeded> 
 ```
+
+at elm-lang.org/try:
+
+```
+import Html
+
+fib n =
+  if n < 2
+  then 1
+  else (fib (n-1)) + (fib (n-2))
+
+fib_cps n c =
+  if n < 2
+  then c 1
+  else
+    fib_cps (n-1)
+    (\r1 ->
+      fib_cps (n-2)
+      (\r2 -> c (r1 + r2)))
+      
+fact n =
+  if n == 0
+  then 1
+  else n * fact (n-1)
+
+fact_cps n c =
+  if n == 0
+  then c 1
+  else
+    fact_cps (n-1)
+    (\r -> c (n * r))
+    
+fact_cps2 c n =
+  if n == 0
+  then c 1
+  else
+    fact_cps2
+      (\r -> c (n * r))
+      (n-1)
+
+main =
+  Html.text
+  (String.fromInt (fib 10)) -- OK
+  -- (fib_cps 10 String.fromInt) -- NG
+  -- (String.fromInt (fact 10)) -- OK
+  -- (fact_cps 10 String.fromInt) -- NG
+  -- (fact_cps2 String.fromInt 10) -- NG
+```
