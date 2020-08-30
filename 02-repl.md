@@ -121,3 +121,44 @@ Hint: Only Int and Float values work as numbers.
 > fib 10
 89 : number
 ```
+
+```
+> fib_cps n c = \
+|   if n <= 1 \    
+|   then c 1 \     
+|   else fib_cps (n - 1) \
+|   \r1 -> fib_cps (n - 2) \
+|   \r2 -> c (r1 + r2)
+-- PARSE ERROR ------------------------------------------------------------- elm
+
+Something went wrong while parsing an `if` expression in fib_cps's definition.
+
+4|   if n <= 1 
+5|   then c 1 
+6|   else fib_cps (n - 1) 
+7|   \r1 -> fib_cps (n - 2) 
+     ^
+I was expecting:
+
+  - an argument, like `name` or `total`
+  - an infix operator, like (+) or (==)
+  - the end of that `if`. Maybe you forgot some code? Or maybe the body of
+    `fib_cps` needs to be indented?
+```
+
+```
+> fib_cps n c = \         
+|   if n <= 1 \             
+|   then c 1 \              
+|   else fib_cps (n - 1) (\ 
+|     \r1 -> fib_cps (n - 2) (\
+|       \r2 -> c (r1 + r2) \   
+|       ))
+<function> : number1 -> (number -> a) -> a
+> fib_cps 1 (\n -> n)
+1 : number
+> fib_cps 5 (\n -> n)
+RangeError: Maximum call stack size exceeded> 
+> fib_cps 2 (\n -> n)
+RangeError: Maximum call stack size exceeded> 
+```
