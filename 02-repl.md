@@ -97,3 +97,27 @@ Hint: Only Int and Float values work as numbers.
 |   5 3
 8 : number
 ```
+
+```
+> fib n = \  
+|   if n <= 1 \
+|   then 1 \   
+|   else fib (n - 1) + fib (n - 2)
+<function> : number1 -> number
+> fib 0
+1 : number
+> fib 1
+1 : number
+> fib 2
+2 : number
+> fib 3
+3 : number
+> fib 4
+5 : number
+> fib 5
+8 : number
+> fib 6
+13 : number
+> fib 10
+89 : number
+```
