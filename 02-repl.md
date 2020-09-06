@@ -210,3 +210,162 @@ main =
   -- (fact_cps 10 String.fromInt) -- NG
   -- (fact_cps2 String.fromInt 10) -- NG
 ```
+
+```
+> names = [ "Alice", "Bob", "Victor" ]                                                           
+["Alice","Bob","Victor"] : List String
+> List.isEmpty names
+False : Bool
+> List.reverse names
+["Victor","Bob","Alice"] : List String
+> map
+-- NAMING ERROR ------------------------------------------------------------ elm
+
+I cannot find a `map` variable:
+
+15|   map
+      ^^^
+These names seem close though:
+
+    max
+    min
+    tan
+    abs
+
+Hint: Read <https://elm-lang.org/0.19.0/imports> to see how `import`
+declarations work in Elm.
+> List.map
+<function> : (a -> b) -> List a -> List b
+> List.map length names
+-- NAMING ERROR ------------------------------------------------------------ elm
+
+I cannot find a `length` variable:
+
+15|   List.map length names
+               ^^^^^^
+These names seem close though:
+
+    negate
+    not
+    List.length
+    e
+
+Hint: Read <https://elm-lang.org/0.19.0/imports> to see how `import`
+declarations work in Elm.
+> String.length
+<function> : String -> Int
+> List.map String.length names
+[5,3,6] : List Int
+> List.map String.fromInteger [ 100, 200, 300 ]
+-- NAMING ERROR ------------------------------------------------------------ elm
+
+I cannot find a `String.fromInteger` variable:
+
+15|   List.map String.fromInteger [ 100, 200, 300 ]
+               ^^^^^^^^^^^^^^^^^^
+The `String` module does not expose a `fromInteger` variable. These names seem
+close though:
+
+    String.fromInt
+    String.filter
+    String.fromChar
+    String.fromList
+
+Hint: Read <https://elm-lang.org/0.19.0/imports> to see how `import`
+declarations work in Elm.
+> List.map String.fromInt [ 100, 200, 300 ]    
+["100","200","300"] : List String
+```
+
+```
+> List.zip
+-- NAMING ERROR ------------------------------------------------------------ elm
+
+I cannot find a `List.zip` variable:
+
+15|   List.zip
+      ^^^^^^^^
+The `List` module does not expose a `zip` variable. These names seem close
+though:
+
+    List.map
+    List.unzip
+    List.all
+    List.any
+
+Hint: Read <https://elm-lang.org/0.19.0/imports> to see how `import`
+declarations work in Elm.
+> Tuple.zip
+-- NAMING ERROR ------------------------------------------------------------ elm
+
+I cannot find a `Tuple.zip` variable:
+
+15|   Tuple.zip
+      ^^^^^^^^^
+The `Tuple` module does not expose a `zip` variable. These names seem close
+though:
+
+    Tuple.pair
+    Tuple.first
+    Maybe.map
+    Sub.map
+
+Hint: Read <https://elm-lang.org/0.19.0/imports> to see how `import`
+declarations work in Elm.
+> List.unzip
+<function> : List ( a, b ) -> ( List a, List b )
+> List.unzip [ ("abc", 100), ("def", 200), ("ghi", 300) ]
+(["abc","def","ghi"],[100,200,300])
+    : ( List String, List number )
+```
+
+```
+> point = { x = 3, y = 4 }                                                                     
+{ x = 3, y = 4 }
+    : { x : number, y : number1 }
+> point.x
+3 : number
+> point.y
+4 : number
+> point.x = 9
+-- PARSE ERROR ------------------------------------------------------------- elm
+
+I was not expecting this equals sign while parsing repl_value_23's definition.
+
+15| repl_value_23 =
+16|   point.x = 9
+              ^
+Maybe this is supposed to be a separate definition? If so, it is indented too
+far. Spaces are not allowed before top-level definitions.
+> .x point
+3 : number
+> under17 {age} = age < 17
+<function> : { a | age : number } -> Bool
+> under17 { age = 100, name = "Kin" }
+False : Bool
+> under17 { age = 17, name = "Laki" }
+False : Bool
+> under17 { age = 6, name = "Kuina" }
+True : Bool
+> under17 { age = 10, birthYear = 1978 }
+True : Bool
+> under17 { x = 3, y = 4 }
+-- TYPE MISMATCH ----------------------------------------------------------- elm
+
+The 1st argument to `under17` is not what I expect:
+
+17|   under17 { x = 3, y = 4 }
+              ^^^^^^^^^^^^^^^^
+This argument is a record of type:
+
+    { x : number, y : number1 }
+
+But `under17` needs the 1st argument to be:
+
+    { a | age : number }
+
+Hint: Seems like a record field typo. Maybe age should be x?
+
+Hint: Can more type annotations be added? Type annotations always help me give
+more specific messages, and I think they could help a lot in this case!
+```
