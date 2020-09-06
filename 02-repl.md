@@ -369,3 +369,56 @@ Hint: Seems like a record field typo. Maybe age should be x?
 Hint: Can more type annotations be added? Type annotations always help me give
 more specific messages, and I think they could help a lot in this case!
 ```
+
+```
+> point
+{ x = 3, y = 4 }
+    : { x : number, y : number1 }
+> under17 point
+-- TYPE MISMATCH ----------------------------------------------------------- elm
+
+The 1st argument to `under17` is not what I expect:
+
+17|   under17 point
+              ^^^^^
+This `point` value is a:
+
+    { x : number, y : number1 }
+
+But `under17` needs the 1st argument to be:
+
+    { a | age : number }
+
+Hint: Seems like a record field typo. Maybe age should be x?
+
+Hint: Can more type annotations be added? Type annotations always help me give
+more specific messages, and I think they could help a lot in this case!
+> under17 { point | age : 9999 }
+-- PARSE ERROR ------------------------------------------------------------- elm
+
+Something went wrong while parsing a record in repl_value_30's definition.
+
+17|   under17 { point | age : 9999 }
+                            ^
+I was expecting to see an equals sign (=) followed by an expression.
+> under17 { point | age = 9999 }
+-- TYPE MISMATCH ----------------------------------------------------------- elm
+
+The `point` record does not have a `age` field:
+
+17|   under17 { point | age = 9999 }
+                        ^^^
+This is usually a typo. Here are the `point` fields that are most similar:
+
+    { x : number
+    , y : number1
+    }
+
+So maybe age should be x?
+> laki = { name = "Laki", age = 17 }
+{ age = 17, name = "Laki" }
+    : { age : number, name : String }
+> under17 laki
+False : Bool
+> under17 { laki | age = 7 }
+True : Bool
